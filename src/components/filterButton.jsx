@@ -6,7 +6,7 @@ const FilterButton = props => {
       <label>
         <input name={props.name} value={props.value}  onChange = {props.handleChange}/>{" "}
       </label>
-      <button onClick={props.handleClick}>{props.btnName}</button>
+      <button className = {props.className || "btn"} onClick={props.handleClick}>{props.btnName}</button>
     </div>
   );
 };

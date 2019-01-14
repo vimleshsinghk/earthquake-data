@@ -5,8 +5,16 @@
   color: green;
   font-size: 1.3em;
   padding: 5px;
+  text-align: start;
+}
+.btn{ 
+  background: rgba(4, 80, 243,1);
+  color:white;
+  padding: 5px 8px;
+  cursor: pointer;
+  margin: 5px;
 }
 .list-item span {
-  color: blue;
+  color: red;
 }
 

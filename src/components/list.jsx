@@ -10,7 +10,14 @@ const List = props => {
       </li>
     );
   });
-  return <ul>{list}</ul>;
+  return (
+    <ul>
+      <li className={props.className || "list-item"}>
+        id <span> : </span>place <span> : </span> mag <span> : </span> magType
+      </li>
+      {list}
+    </ul>
+  );
 };
 
 export default List;

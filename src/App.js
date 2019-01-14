@@ -26,7 +26,7 @@ class App extends Component {
         newState.list = list.filter(
           val => String(val.properties[e]) === String(this.state[e])
         );
-        if (!this.state.mag && !this.state.magType) return this.setState(list);
+        if (!this.state.mag && !this.state.magType) return this.setState({list});
         this.setState(newState);
       });
   }
@@ -52,7 +52,7 @@ class App extends Component {
           name="mag"
           btnName="filter by magnitude"
           handleClick={() => this.handleClick("mag")}
-          value={this.state.magnitude}
+          value={this.state.mag}
           handleChange={this.handeleChange}
         />
         <FilterButton
