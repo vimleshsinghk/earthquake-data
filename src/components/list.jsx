@@ -1,6 +1,6 @@
 import React from "react";
 const List = props => {
-  if (!props.list) return "";
+  if (!props.list || props.list.length === 0) return "not found";
   const list = props.list.map(val => {
     const { id, properties } = val;
     return (

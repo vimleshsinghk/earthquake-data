@@ -7,31 +7,33 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: []
+      list: [],
+      mag: "",
+      magType: ""
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handeleChange = this.handeleChange.bind(this);
   }
+
   handleClick(e) {
-    console.log("handleClick", e);
     const newState = Object.assign({}, this.state);
-    console.log(newState.list);
-    newState.list.sort((a, b) => {
-      if (typeof a.properties[e] === "number") {
-        return a.properties[e] - b.properties[e];
-      } else {
-        let x = a.properties[e].toLowerCase();
-        let y = b.properties[e].toLowerCase();
-        if (x < y) {
-          return -1;
-        }
-        if (x > y) {
-          return 1;
-        }
-        return 0;
-      }
-    });
-    this.setState(newState);
+    const url =
+      "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-02";
+    fetch(url)
+      .then(resp => resp.json())
+      .then(data => {
+        let list = data.features;
+        newState.list = list.filter(
+          val => String(val.properties[e]) === String(this.state[e])
+        );
+        if (!this.state.mag && !this.state.magType) return this.setState(list);
+        this.setState(newState);
+      });
   }
+  handeleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
   componentDidMount() {
     const url =
       "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-02";
@@ -42,18 +44,23 @@ class App extends Component {
         this.setState({ list: data.features });
       });
   }
+
   render() {
     return (
       <div className="App">
         <FilterButton
-          name="magnitude"
+          name="mag"
           btnName="filter by magnitude"
           handleClick={() => this.handleClick("mag")}
+          value={this.state.magnitude}
+          handleChange={this.handeleChange}
         />
         <FilterButton
           name="magType"
           btnName="filter by magType"
           handleClick={() => this.handleClick("magType")}
+          value={this.state.magType}
+          handleChange={this.handeleChange}
         />
         <List list={this.state.list} />
       </div>
