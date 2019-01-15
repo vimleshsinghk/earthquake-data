@@ -1,12 +1,16 @@
 import React from "react";
+import Button from "./button";
+import Input from "./input";
 
 const FilterButton = props => {
   return (
     <div>
-      <label>
-        <input name={props.name} value={props.value}  onChange = {props.handleChange}/>{" "}
-      </label>
-      <button className = {props.className || "btn"} onClick={props.handleClick}>{props.btnName}</button>
+      <Input
+        name={props.name}
+        value={props.value}
+        onChange={props.handleChange}
+      />
+      <Button onClick={props.handleClick} btnName={props.btnName} />
     </div>
   );
 };

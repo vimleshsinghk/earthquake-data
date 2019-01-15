@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import FilterButton from "./components/filterButton";
-import List from "./components/list";
+import ListData from "./components/listData";
 
 class App extends Component {
   constructor(props) {
@@ -40,7 +40,6 @@ class App extends Component {
     fetch(url)
       .then(resp => resp.json())
       .then(data => {
-        console.log(data.features);
         this.setState({ list: data.features });
       });
   }
@@ -62,7 +61,7 @@ class App extends Component {
           value={this.state.magType}
           handleChange={this.handeleChange}
         />
-        <List list={this.state.list} />
+        <ListData list={this.state.list} />
       </div>
     );
   }
