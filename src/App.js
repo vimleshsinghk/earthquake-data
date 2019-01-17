@@ -12,7 +12,7 @@ class App extends Component {
       magType: ""
     };
     this.handleClick = this.handleClick.bind(this);
-    this.handeleChange = this.handeleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleClick(e) {
@@ -23,14 +23,26 @@ class App extends Component {
       .then(resp => resp.json())
       .then(data => {
         let list = data.features;
-        newState.list = list.filter(
-          val => String(val.properties[e]) === String(this.state[e])
-        );
-        if (!this.state.mag && !this.state.magType) return this.setState({list});
+        newState.list = list.filter(val => {
+          if (String(this.state.magType) && String(this.state.mag)) {
+            return (
+              String(val.properties.magType) === String(this.state.magType) &&
+              String(val.properties.mag) === String(this.state.mag)
+            );
+          } else if (String(this.state.magType)) {
+            return (
+              String(val.properties.magType) === String(this.state.magType)
+            );
+          } else if (String(this.state.mag)) {
+            return (String(val.properties.mag) === String(this.state.mag));
+          } else {
+            return true;
+          }
+        });
         this.setState(newState);
       });
   }
-  handeleChange(e) {
+  handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
@@ -52,14 +64,14 @@ class App extends Component {
           btnName="filter by magnitude"
           handleClick={() => this.handleClick("mag")}
           value={this.state.mag}
-          handleChange={this.handeleChange}
+          handleChange={this.handleChange}
         />
         <FilterButton
           name="magType"
           btnName="filter by magType"
           handleClick={() => this.handleClick("magType")}
           value={this.state.magType}
-          handleChange={this.handeleChange}
+          handleChange={this.handleChange}
         />
         <ListData list={this.state.list} />
       </div>
